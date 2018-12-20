@@ -6,6 +6,9 @@ class Solver:
     def __init__(self, maze):
         self.maze = maze
         self.final_path = self.a_star(self.maze.start, self.maze.goal)
+        if (len(self.final_path) < 1):
+            print ("No path")
+            return
         for cell in self.final_path:
             cell.IsPath = True
         self.maze.draw_cell(self.final_path)
@@ -93,19 +96,19 @@ class Solver:
         print (cell.x, cell.y)
         if (cell.x + 1 in range(0, self.maze.width * self.maze.cell_size)):
             newCell = self.maze.find_cell_by_position(cell.x + self.maze.cell_size, cell.y)
-            if (not newCell.IsWall):
+            if (newCell != None and not newCell.IsWall):
                 neighbors.append(newCell)
         if (cell.x - 1 in range(0, self.maze.width * self.maze.cell_size)):
             newCell = self.maze.find_cell_by_position(cell.x - self.maze.cell_size, cell.y)
-            if (not newCell.IsWall):
+            if (newCell != None and not newCell.IsWall):
                 neighbors.append(newCell)
         if (cell.y + 1 in range(0, self.maze.height * self.maze.cell_size)):
             newCell = self.maze.find_cell_by_position(cell.x, cell.y + self.maze.cell_size)
-            if (not newCell.IsWall):
+            if (newCell != None and not newCell.IsWall):
                 neighbors.append(newCell)
         if (cell.y - 1 in range(0, self.maze.height * self.maze.cell_size)):
             newCell = self.maze.find_cell_by_position(cell.x, cell.y - self.maze.cell_size)
-            if (not newCell.IsWall):
+            if (newCell != None and not newCell.IsWall):
                 neighbors.append(newCell)
         return neighbors
     def dist_between(self, gScore, current, neighbor):
